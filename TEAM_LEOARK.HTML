@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SAFE'HER' — Team LEOARK (Improved Demo)</title>
+  <meta name="description" content="SAFE'HER' — women safety demo: SOS calling saved contacts, Period Help broadcast to volunteers, volunteer network (demo), tips & resources. Presentation-ready single-file for webathon." />
+  <meta name="color-scheme" content="dark">
+  <style>
+
+
+
+
+    /* --- Theme & layout (concise, responsive, readable) --- */
+    :root{
+      --bg:#07101a; --card:#0b1622; --muted:#97a6b8; --accent:#ff6b81; --accent2:#00c48c; --glass:rgba(255,255,255,0.03);
+      --radius:12px; --gap:14px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#030519 0%,#07101a 100%);color:#e7f1ff;-webkit-font-smoothing:antialiased}
+    a{color:var(--accent)}
+    header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(90deg,#071124 0%,#031223 100%);backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,0.6);position:sticky;top:0;z-index:100}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand h1{font-size:18px;margin:0}
+    nav{display:flex;gap:10px;align-items:center}
+
+    main{max-width:1100px;margin:20px auto;padding:22px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:22px}
+    @media(max-width:920px){.grid{grid-template-columns:1fr}header{padding:12px}main{padding:14px}} 
+
+    .card{background:linear-gradient(180deg,var(--card),#071827);border-radius:var(--radius);padding:16px;box-shadow:0 12px 40px rgba(2,8,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    h2{margin:0 0 8px 0}
+    p.lead{margin:6px 0 16px;color:var(--muted)}
+
+    .controls{display:flex;gap:10px;flex-wrap:wrap}
+    button.btn{border:0;padding:11px 14px;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px}
+    .btn-sos{background:linear-gradient(90deg,var(--accent),#ff3b67);color:#ffffff;box-shadow:0 12px 36px rgba(255,107,129,0.12)}
+    .btn-period{background:linear-gradient(90deg,#8e5bff,#5b9bff);color:#fff}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)}
+
+    .muted{color:var(--muted);font-size:13px}
+    .small{font-size:13px}
+
+    .contacts{display:flex;flex-direction:column;gap:10px}
+    .contact-row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02)}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:#e6f0ff}
+
+    footer{margin-top:18px;padding:14px;border-radius:10px;background:linear-gradient(90deg,#031523,#061226);display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+    .volunteers{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow:auto;padding-right:6px}
+    .vol{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent)}
+    .badge{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);color:var(--muted)}
+
+
+
+
+
+
+    /* modal */
+    #modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;z-index:2000}
+    #modal .back{position:absolute;inset:0;background:rgba(2,6,12,0.7);backdrop-filter:blur(3px)}
+    #modal .panel{position:relative;max-width:720px;width:100%;padding:18px;border-radius:12px}
+
+    .row{display:flex;gap:8px;align-items:center}
+
+
+
+
+
+    /* small screens: stack actions */
+    @media(max-width:560px){ .controls{flex-direction:column;align-items:stretch} .card{padding:12px} }
+
+
+
+
+
+    /* subtle helper styles */
+    .hint{color:var(--muted);font-size:12px}
+    .tiny{font-size:12px;padding:6px 8px;border-radius:8px}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#ff6b81"/><path d="M7.8 10.5a4.2 4.2 0 018.4 0v3.9" stroke="#fff" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>
+        <h1>SAFE'HER' — Team LEOARK</h1>
+        <div class="muted" style="font-size:12px">PRESENTED BY - ROHIT.S.LAMANI • PREM.S.LAMANI • PRAJWAL.KONERI • SAGAR.CHAVAN</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#tips" class="hint">Tips</a>
+      <a href="#resources" class="hint">Resources</a>
+      <a href="#volunteers" class="hint">Volunteers</a>
+      <a href="https://ncw.nic.in" target="_blank" rel="noopener" class="hint">NCW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="grid">
+      <section>
+        <div class="card" aria-labelledby="mainTitle">
+          <h2 id="mainTitle">SAFE'HER' — Empower & support women locally</h2>
+          <p class="lead">Your safety, our mission — instant SOS at the touch of your fingerprint, anytime, anywhere.</p>
+
+          <div class="controls" role="group" aria-label="Primary actions">
+            <button id="sos" class="btn btn-sos" aria-describedby="sosHint">⚠️ SOS — Call First Contact</button>
+            <button id="periodHelp" class="btn btn-period">🩸 Period Help — Notify Nearby Volunteers</button>
+            <button id="notifyVols" class="btn btn-ghost">🔔 Broadcast Demo</button>
+            <button id="joinVols" class="btn btn-ghost">➕ Join as Volunteer (demo)</button>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+            <button id="shareDemo" class="btn btn-ghost">Share This Demo</button>
+            <button id="print" class="btn btn-ghost">Print / Save PDF</button>
+            <button id="simulateIncoming" class="btn btn-ghost">📞 Simulate Incoming Call (demo)</button>
+            <button id="loudAlarm" class="btn btn-ghost">🔊 Panic Alarm (demo)</button>
+          </div>
+
+          <div id="sosHint" class="hint" style="margin-top:8px">On mobile this will open the dialer and SMS composer. (Browsers restrict auto-calls/SMS for security.)</div>
+
+          <hr style="border:none;height:1px;background:rgba(255,255,255,0.03);margin:14px 0" />
+
+          <h3 style="margin:0 0 8px 0">Setup Emergency Contacts (up to 6)</h3>
+          <form id="addContactForm" class="inline" onsubmit="return false;" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px">
+            <input id="cname" placeholder="Label (e.g. Mom)" aria-label="Contact label" style="flex:1;min-width:140px"/>
+            <input id="cphone" placeholder="Phone (e.g. +9198xxxx)" inputmode="tel" aria-label="Contact phone" style="flex:1;min-width:140px"/>
+            <button id="addContact" class="btn" style="background:var(--accent);color:#fff">Add</button>
+            <button id="clearAll" type="button" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)">Clear All</button>
+            <button id="exportContacts" class="btn btn-ghost tiny">Export</button>
+            <input id="importFile" type="file" accept="application/json" style="display:none" />
+            <button id="importBtn" class="btn btn-ghost tiny">Import</button>
+          </form>
+
+          <div style="margin-top:12px">
+            <div class="muted">Saved emergency contacts (local to this browser)</div>
+            <div id="contacts" class="contacts" style="margin-top:8px"></div>
+          </div>
+
+          <div style="margin-top:16px" class="muted small">Notes: This is a web-demo. For production, contacts should be stored server-side and verified. See "Future scope" slide in the presentation.</div>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="card" id="tips">
+          <h3 style="margin-top:0">Quick Safety Tips</h3>
+          <ul style="color:var(--muted);padding-left:18px">
+            <li>Share live location with trusted contacts when traveling alone.</li>
+            <li>Keep emergency numbers saved and labelled.</li>
+            <li>Use assertive voice, escape routes and crowded places.</li>
+            <li>Carry whistle / pepper spray where legal.</li>
+            <li>For period emergencies, ask volunteers or community help nearby.</li>
+          </ul>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="card" id="resources">
+          <h3 style="margin-top:0">Resources & Helplines</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <div style="flex:1 1 200px;padding:10px;border-radius:8px;background:linear-gradient(180deg,#081425,#071220);border:1px solid rgba(255,255,255,0.02)"><strong>National Emergency</strong><div class="small muted">112 — Police, Ambulance & Fire</div></div>
+            <div style="flex:1 1 200px;padding:10px;border-radius:8px;background:linear-gradient(180deg,#081425,#071220);border:1px solid rgba(255,255,255,0.02)"><strong>Women Helpline</strong><div class="small muted">181 — Immediate assistance & counseling</div></div>
+            <div style="flex:1 1 200px;padding:10px;border-radius:8px;background:linear-gradient(180deg,#081425,#071220);border:1px solid rgba(255,255,255,0.02)"><strong>Useful Links</strong><div class="small muted"><a href="https://ncw.nic.in" target="_blank" rel="noopener">NCW</a> • <a href="https://wcd.nic.in" target="_blank" rel="noopener">WCD</a></div></div>
+          </div>
+        </div>
+
+      </section>
+
+      <aside>
+        <div class="card" id="volunteers">
+          <h3 style="margin-top:0">Volunteers Network (demo)</h3>
+          <p class="small muted">A network of heroes, volunteers ready to respond in real time, when every second matters.</p>
+          <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+            <input id="volName" placeholder="Volunteer name" aria-label="Volunteer name" style="flex:1" />
+            <button id="registerVol" class="btn btn-ghost">Register</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="muted small">Active volunteers (this browser):</div>
+            <div id="volList" class="volunteers" aria-live="polite"></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="muted small">Demo controls</div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button id="simulateNearby" class="btn btn-ghost">Simulate Nearby Volunteer</button>
+              <button id="clearVols" class="btn btn-ghost">Clear Volunteers</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card">
+          <h3 style="margin-top:0">Quick Actions</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <a id="call112" href="tel:112" class="btn btn-ghost" style="display:inline-block;text-align:left">Call 112 — Emergency</a>
+            <a id="call181" href="tel:181" class="btn btn-ghost" style="display:inline-block;text-align:left">Call 181 — Women Helpline</a>
+            <button id="getLoc" class="btn btn-ghost">Share My Location (demo)</button>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <footer>
+      <div>© <span id="year"></span> SAFE'HER' • Team LEOARK</div>
+      <div class="muted">Single-file demo • Presentation-ready</div>
+    </footer>
+  </main>
+
+  <div id="modal" role="dialog" aria-hidden="true">
+    <div class="back" id="modalBack"></div>
+    <div class="panel card" role="document">
+      <h3 id="modalTitle">Action</h3>
+      <pre id="modalBody" style="white-space:pre-wrap;background:transparent;border-radius:8px;padding:10px;color:var(--muted);margin:0">No details yet.</pre>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px"><button id="closeModal" class="btn btn-ghost">Close</button></div>
+    </div>
+  </div>
+
+  <script>
+
+
+
+
+
+  /* Improved, modular JS: clear helpers, comments, and safer URIs */
+  (function(){
+    // --- DOM refs ---
+    const yearEl = document.getElementById('year'); yearEl.textContent = new Date().getFullYear();
+    const modal = document.getElementById('modal'); const modalBody = document.getElementById('modalBody'); const modalTitle = document.getElementById('modalTitle'); const modalBack = document.getElementById('modalBack');
+
+    function showModal(title, msg){ modalTitle.textContent = title||'Info'; modalBody.textContent = msg||''; modal.style.display='flex'; modal.setAttribute('aria-hidden','false'); }
+    function hideModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+
+
+
+
+
+
+
+    // --- logging helper (keeps UI presentable during demo) ---
+    function log(msg){ showModal('SAFE\'HER\' — Event', new Date().toLocaleTimeString() + ' — ' + msg); }
+
+
+
+
+
+
+    // --- Storage keys & simple contact utilities ---
+    const CONTACTS_KEY = 'safeher_contacts_v1';
+    function loadContacts(){ try{ return JSON.parse(localStorage.getItem(CONTACTS_KEY)) || []; }catch(e){ return []; } }
+    function saveContacts(list){ localStorage.setItem(CONTACTS_KEY, JSON.stringify(list)); }
+
+
+
+
+
+
+    // normalize phone: keep + and digits and commas
+    function normalizePhone(s){ if(!s) return ''; s = String(s).trim(); // replace separators ; | whitespace with comma
+      s = s.replace(/[;|\n\t\s]+/g, ','); // remove non-digit except + and comma
+      s = s.replace(/[^\d+,\+]/g, ''); s = s.replace(/,+/g, ','); s = s.replace(/^,|,$/g, ''); return s; }
+
+    function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+
+
+
+
+
+    // --- Render contacts UI ---
+    function renderContacts(){ const root = document.getElementById('contacts'); root.innerHTML=''; const list = loadContacts(); if(!list.length){ root.innerHTML = '<div class="muted">No contacts yet — add family / friends (saved locally)</div>'; return; }
+      list.forEach((c,i)=>{
+        const row = document.createElement('div'); row.className='contact-row';
+        const phones = normalizePhone(c.phone||''); const first = (phones.split(',')[0]||'');
+        const telHref = first ? 'tel:'+encodeURIComponent(first) : '#';
+        const smsHref = phones ? 'sms:'+encodeURIComponent(phones) : '#';
+        row.innerHTML = `<div style="display:flex;gap:10px;align-items:center"><div><strong>${escapeHtml(c.label||('Contact '+(i+1)))}</strong><div class=\"small muted\">${escapeHtml(c.phone)}</div></div></div><div style=\"display:flex;gap:8px\"><a href=\"${telHref}\" class=\"btn btn-ghost tiny\" aria-label=\"Call ${escapeHtml(c.label||c.phone)}\">Call</a><a href=\"${smsHref}\" class=\"btn btn-ghost tiny\" aria-label=\"SMS ${escapeHtml(c.label||c.phone)}\">SMS</a><button class=\"btn tiny remove-contact\" data-idx=\"${i}\" aria-label=\"Remove contact\" style=\"background:rgba(255,255,255,0.02);color:var(--muted)\">Remove</button></div>`;
+        root.appendChild(row);
+      }); }
+
+    renderContacts();
+
+
+
+
+    
+
+    // --- Contact form actions ---
+    document.getElementById('addContact').addEventListener('click', function(){ const name = document.getElementById('cname').value.trim(); const phoneRaw = document.getElementById('cphone').value.trim(); if(!phoneRaw){ alert('Please enter a phone number'); return; } const phone = normalizePhone(phoneRaw); if(!phone){ alert('Phone looks invalid after normalization'); return; } const list = loadContacts(); if(list.length>=6){ alert('Max 6 contacts allowed'); return; } list.push({label:name,phone:phone}); saveContacts(list); renderContacts(); document.getElementById('cname').value=''; document.getElementById('cphone').value=''; log('Contact added: '+(name||phone)); });
+
+    // remove contact via delegation
+    document.getElementById('contacts').addEventListener('click', function(e){ if(e.target && e.target.classList.contains('remove-contact')){ const idx = +e.target.getAttribute('data-idx'); const list = loadContacts(); const removed = list.splice(idx,1)[0]; saveContacts(list); renderContacts(); log('Removed contact: '+(removed.label||removed.phone)); } });
+
+    document.getElementById('clearAll').addEventListener('click', function(){ if(confirm('Clear all saved contacts?')){ saveContacts([]); renderContacts(); log('All contacts cleared'); } });
+
+    // export / import
+    document.getElementById('exportContacts').addEventListener('click', function(){ const list = loadContacts(); const blob = new Blob([JSON.stringify(list,null,2)], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'safeher-contacts.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); log('Contacts exported ('+list.length+' items)'); });
+
+    const importFile = document.getElementById('importFile'); document.getElementById('importBtn').addEventListener('click', function(){ importFile.click(); });
+    importFile.addEventListener('change', function(e){ const f = e.target.files && e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = function(){ try{ const parsed = JSON.parse(r.result); if(!Array.isArray(parsed)){ alert('Invalid file format: expected array'); return; } const incoming = parsed.map(it=>({label:it.label||'', phone:normalizePhone(it.phone||'')})).filter(it=>it.phone); const current = loadContacts(); const merged = incoming.concat(current).slice(0,6); saveContacts(merged); renderContacts(); log('Imported contacts: '+incoming.length); }catch(err){ alert('Import failed: '+err.message); } }; r.readAsText(f); e.target.value=''; });
+
+    // --- BroadcastChannel volunteers (demo) ---
+    const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('safeher_channel') : null;
+    const volListEl = document.getElementById('volList'); let volunteers = JSON.parse(localStorage.getItem('safeher_vols')||'[]');
+    function renderVols(){ volListEl.innerHTML=''; volunteers.forEach(v=>{ const d = document.createElement('div'); d.className='vol'; d.innerHTML = `<div style="flex:1"><strong>${escapeHtml(v.name)}</strong><div class=\"small muted\">${escapeHtml(v.id||'')}</div></div><div class=\"badge\">${escapeHtml(v.mode||'online')}</div>`; volListEl.appendChild(d); }); }
+    renderVols();
+
+    document.getElementById('registerVol').addEventListener('click', async function(){ const nameInput = document.getElementById('volName'); const name = nameInput.value.trim() || ('Vol-'+Math.floor(Math.random()*9000)); const id = name + '-' + Math.floor(Math.random()*9000);
+      volunteers = volunteers.filter(x=>x.id!==id); volunteers.unshift({name:id?name:name,id,mode:'online',ts:Date.now()}); if(volunteers.length>50) volunteers.length = 50; localStorage.setItem('safeher_vols', JSON.stringify(volunteers)); renderVols(); if(bc) bc.postMessage({type:'vol-register',payload:{name,id}}); nameInput.value=''; // request notification permission politely
+      if('Notification' in window && Notification.permission==='default'){ try{ await Notification.requestPermission(); }catch(e){} }
+      log('Registered volunteer: '+name);
+    });
+
+    document.getElementById('simulateNearby').addEventListener('click', function(){ const n = 'Nearby-'+Math.floor(Math.random()*9000); if(bc) bc.postMessage({type:'vol-register',payload:{name:n,id:n}}); log('Simulated nearby volunteer: '+n); });
+    document.getElementById('clearVols').addEventListener('click', function(){ if(confirm('Clear demo volunteers?')){ volunteers=[]; localStorage.setItem('safeher_vols','[]'); renderVols(); log('Cleared volunteers'); } });
+
+    if(bc){ bc.onmessage = function(ev){ const d = ev.data; if(!d) return; if(d.type === 'period-help'){ notifyLocal('Period Help nearby','A user requested period help: '+(d.payload.message||'')); try{ volunteers = volunteers.filter(v=>v.id!==d.payload.fromId); volunteers.unshift({name:d.payload.fromName||'Help',id:d.payload.fromId||('id-'+Date.now()),mode:'notified',ts:Date.now()}); if(volunteers.length>50) volunteers.length=50; localStorage.setItem('safeher_vols', JSON.stringify(volunteers)); renderVols(); }catch(e){} log('Received period-help broadcast'); }
+        if(d.type === 'sos-alert'){ notifyLocal('SOS Alert','A nearby SOS was triggered'); log('Received SOS broadcast'); }
+        if(d.type === 'vol-register'){ volunteers = volunteers.filter(v=>v.id!==d.payload.id); volunteers.unshift({name:d.payload.name,id:d.payload.id,mode:'online',ts:Date.now()}); if(volunteers.length>50) volunteers.length=50; localStorage.setItem('safeher_vols', JSON.stringify(volunteers)); renderVols(); }
+      };
+    }
+
+    async function notifyLocal(title,body){ try{ if('Notification' in window){ if(Notification.permission!=='granted'){ await Notification.requestPermission(); } if(Notification.permission==='granted'){ new Notification(title,{body:body,tag:'safeher'}); } } if(navigator.vibrate) navigator.vibrate([200,100,200]); }catch(e){ console.warn('Notification fail',e); } }
+
+    // --- Geolocation helper ---
+    async function tryGetLocation(){ return new Promise(resolve=>{ if(!navigator.geolocation){ resolve(null); return; } navigator.geolocation.getCurrentPosition(pos=>{ resolve('https://maps.google.com/?q='+pos.coords.latitude+','+pos.coords.longitude); }, err=>{ resolve(null); }, {timeout:5000}); }); }
+
+    // --- SOS: prepare dial + SMS composer, broadcast demo ---
+    document.getElementById('sos').addEventListener('click', async function(){ const list = loadContacts(); if(!list || list.length===0){ alert('Please add emergency contacts first (Setup Emergency Contacts)'); return; }
+      const now = new Date().toLocaleString(); const coords = await tryGetLocation(); const body = `EMERGENCY SOS via SAFE'HER'\nTime: ${now}\nLocation: ${coords||'Unavailable'}\nPlease call immediately.`;
+      log('Preparing SOS — calling first contact: '+list[0].phone);
+      // open tel: first contact
+      const firstPhone = normalizePhone(list[0].phone).split(',')[0] || '';
+      if(firstPhone){ setTimeout(()=>{ try{ window.location.href = 'tel:'+encodeURIComponent(firstPhone); }catch(e){ console.warn(e); } },200); }
+
+      // prepare SMS composer for all contacts (many devices support sms:123,456?body=...)
+      try{ const phones = list.map(c=>normalizePhone(c.phone)).join(','); const smsUri = 'sms:'+phones+'?body='+encodeURIComponent(body); setTimeout(()=>{ try{ window.location.href = smsUri; }catch(e){ console.warn('SMS prep failed',e); } },1200); }catch(e){ console.warn('SMS prep failed',e); }
+
+      if(bc) bc.postMessage({type:'sos-alert',payload:{time:Date.now(),from:navigator.userAgent}});
+    });
+
+    // --- Period help ---
+    document.getElementById('periodHelp').addEventListener('click', async function(){ const name = prompt('Enter your name to show to volunteers') || 'Anonymous'; const now = new Date().toLocaleString(); const coords = await tryGetLocation(); const message = `${name} needs period supplies/help — Time: ${now} — Location: ${coords||'Unavailable'}`; log('Broadcasting Period Help — '+message); if(bc) bc.postMessage({type:'period-help',payload:{fromName:name,fromId:name+'-'+Math.floor(Math.random()*9000),'message':message}});
+      const list = loadContacts(); if(list && list.length>0){ const phones = list.map(c=>normalizePhone(c.phone)).join(','); const smsUri = 'sms:'+phones+'?body='+encodeURIComponent('I need period help: '+message); setTimeout(()=>{ try{ window.location.href = smsUri; }catch(e){ console.warn('SMS prep failed',e); } },800); }
+    });
+
+    // notify volunteers demo
+    document.getElementById('notifyVols').addEventListener('click', function(){ if(bc){ bc.postMessage({type:'period-help',payload:{fromName:'Demo',fromId:'demo-'+Math.random().toString(36).slice(2,8),message:'Demo request — please respond'}}); log('Broadcasted demo notification to volunteers'); } else alert('BroadcastChannel not supported in this browser (demo limited)'); });
+
+    document.getElementById('joinVols').addEventListener('click', function(){ const n = prompt('Volunteer name to show (demo)') || ('Vol-'+Math.floor(Math.random()*9000)); const id = n+'-'+Math.floor(Math.random()*9000); volunteers.unshift({name:n,id,mode:'online'}); if(volunteers.length>50) volunteers.length=50; localStorage.setItem('safeher_vols', JSON.stringify(volunteers)); renderVols(); if(bc) bc.postMessage({type:'vol-register',payload:{name:n,id}}); log('Joined volunteers as '+n); });
+
+    // share & print
+    document.getElementById('shareDemo').addEventListener('click', async function(){ const url = location.href; const shareData = {title:"SAFE'HER' — Team LEOARK",text:'Open SAFE\'HER\' demo (SOS + Period Help)',url}; try{ if(navigator.share){ await navigator.share(shareData); log('Shared via Web Share'); } else { await navigator.clipboard.writeText(url); alert('Link copied: '+url); log('Link copied'); } }catch(e){ console.warn(e); alert('Sharing failed — link copied'); try{ await navigator.clipboard.writeText(url);}catch{} }
+    });
+
+    document.getElementById('print').addEventListener('click', function(){ window.print(); log('Print opened'); });
+
+    document.getElementById('getLoc').addEventListener('click', async function(){ const coords = await tryGetLocation(); if(coords){ window.open(coords,'_blank'); log('Location opened: '+coords); } else { alert('Location unavailable — allow location access'); } });
+
+    document.getElementById('closeModal').addEventListener('click', hideModal); modalBack.addEventListener('click', hideModal); document.addEventListener('keydown', function(e){ if(e.key === 'Escape') hideModal(); });
+
+    // hotkeys (ignore when typing)
+    document.addEventListener('keydown', function(e){ const tag = (document.activeElement && document.activeElement.tagName) || ''; if(tag === 'INPUT' || tag === 'TEXTAREA') return; if(e.key==='P' || e.key==='p') document.getElementById('periodHelp').click(); if(e.key==='S' || e.key==='s') document.getElementById('sos').click(); });
+
+    // --- Simulate incoming call (presentation "wow" effect) ---
+    function playBeep(duration=700){ try{ const ctx = new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.type='sine'; o.frequency.value = 900; o.connect(g); g.connect(ctx.destination); g.gain.value = 0.0001; o.start(); // ramp up and down
+      g.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime + 0.02); setTimeout(()=>{ g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.02 + duration/1000); o.stop(ctx.currentTime + 0.02 + duration/1000 + 0.05); try{ ctx.close(); }catch(e){} }, duration);
+    }catch(e){ console.warn('Beep failed',e); } }
+
+    document.getElementById('simulateIncoming').addEventListener('click', function(){ showModal('Incoming Call','Simulated incoming call — the UI will ring and vibrate (demo).\n\nClick Close to stop.'); try{ if(navigator.vibrate) navigator.vibrate([300,150,300]); playBeep(1200); }catch(e){} });
+
+    // Panic alarm (continuous short beeps + vibration) — demo only
+    let alarmInterval = null;
+    document.getElementById('loudAlarm').addEventListener('click', function(){ if(alarmInterval){ clearInterval(alarmInterval); alarmInterval = null; document.getElementById('loudAlarm').textContent = '🔊 Panic Alarm (demo)'; log('Alarm stopped'); return; } document.getElementById('loudAlarm').textContent = '■ Stop Alarm'; log('Alarm started'); alarmInterval = setInterval(()=>{ try{ if(navigator.vibrate) navigator.vibrate([200]); playBeep(350); }catch(e){} },700); });
+
+    // polite notification permission prompt when registering volunteers already included
+
+  })();
+  </script>
+</body>
+</html>
